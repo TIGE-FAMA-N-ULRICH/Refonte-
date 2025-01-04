@@ -126,7 +126,7 @@ The platform will encompass:
 
 Got it! Here’s the information translated into English and formatted for a README.md file, so you can directly copy and paste it:
 
-Simulated Enterprise Environment (Before Migration)
+# *Simulated Enterprise Environment (Before Migration)*
 
 Overview
 
