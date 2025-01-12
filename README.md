@@ -118,5 +118,70 @@ This project aims to develop a secure chatroom platform that ensures privacy and
 3. Begin development and share progress regularly.
 
 ---
+---
+
+# **Task Distribution**
+---
+
+
+To ensure smooth collaboration and progress on the project, tasks have been distributed among team members based on skills and interest. Below is the detailed breakdown of responsibilities:  
+
+### **1. Authentication and Key Management** 🔑  
+- **Responsible Member**: [Team Member 1]  
+- **Tasks**:  
+  - Develop the user registration and login system.  
+  - Integrate Multi-Factor Authentication (MFA) for secure login.  
+  - Design and implement the local private/public key generation process.  
+  - Ensure secure transmission of public keys to the server.  
+  - Document the authentication workflow.  
+
+### **2. Chatroom Backend and Real-Time Communication** 💬  
+- **Responsible Member**: [Team Member 2]  
+- **Tasks**:  
+  - Build the socket-based communication system for real-time messaging.  
+  - Secure socket communication with SSL/TLS protocols.  
+  - Implement message encryption and decryption logic.  
+  - Design and test server-side storage for encrypted messages.  
+  - Debug and optimize the backend performance.  
+
+### **3. Frontend Design and User Interface** 🎨  
+- **Responsible Member**: [Team Member 3]  
+- **Tasks**:  
+  - Design a simple and intuitive user interface for the chatroom.  
+  - Create forms for registration and login with validation.  
+  - Integrate frontend with the backend (API endpoints, real-time messaging).  
+  - Test the interface on different devices and browsers.  
+  - Add visual elements to enhance user experience (icons, buttons, etc.).  
+
+### **4. Security Audits and Testing** 🛡️  
+- **Shared Responsibility**: [Team Member 1, Team Member 2, Team Member 3]  
+- **Tasks**:  
+  - Perform unit testing on key features (authentication, messaging, encryption).  
+  - Simulate attacks to test the security of private keys and encrypted messages.  
+  - Validate SSL/TLS implementation to prevent vulnerabilities.  
+  - Review and improve overall project security.  
+
+### **5. Documentation and Project Management** 📋  
+- **Shared Responsibility**: [Team Member 1, Team Member 2, Team Member 3]  
+- **Tasks**:  
+  - Document each feature and functionality for GitHub.  
+  - Prepare clear setup and usage instructions.  
+  - Monitor task completion and update milestones.  
+  - Share progress updates with the group regularly.  
+
+---
+
+### **Next Steps** 🚀  
+1. Begin by setting up the development environment and initializing the repository.  
+2. Follow the task distribution above and start with high-priority features:  
+   - Authentication system.  
+   - Socket-based messaging backend.  
+3. Regularly share updates during team meetings or through your group chat.  
+4. Test and review completed tasks to ensure quality before moving to the next phase.  
+
+Let's make this project a success! 💪✨  
+
+
+---
 
 This `README.md` will help your teammates understand the project scope and guide the initial development phases. Si tu as besoin d’ajuster certains points ou d’ajouter des détails, fais-le-moi savoir !
