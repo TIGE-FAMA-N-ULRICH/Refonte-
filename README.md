@@ -1,206 +1,122 @@
-# ☁️ **Cloud Security Platform**  
-**A Comprehensive Framework for Securing Enterprise Cloud Migrations**  
+# Secure Chatroom with End-to-End Encryption
+
+## **Project Overview**
+This project aims to develop a secure chatroom platform that ensures privacy and confidentiality for its users through **end-to-end encryption (E2EE)**. The system will allow users to exchange messages in real-time, with their data encrypted and decrypted only on their devices. The project is designed to simulate a real-world secure communication platform, focusing on **data security**, **identity management**, and **reliable encryption protocols**.
 
 ---
 
-## 📖 **Project Overview**  
+## **Objectives**
+1. **User-Friendly Interface**:  
+   - Provide a simple and intuitive web-based chat platform for users.
+   - Support secure login and registration processes, including Multi-Factor Authentication (MFA).
 
-This project focuses on building a **cloud security platform (or toolkit)** that simulates a secure enterprise migration to the cloud. It addresses real-world challenges such as **data protection**, **governance**, **monitoring**, and **incident response**.  
+2. **End-to-End Encryption (E2EE)**:  
+   - Messages are encrypted on the sender's device and decrypted only on the recipient's device.
+   - Ensure the server has no access to private keys or plaintext messages.
 
-The platform will encompass:  
-1. **Cloud Migration Framework**: Best practices and tools for moving workloads to the cloud (AWS/Azure/GCP).  
-2. **Security Governance**: Ensuring compliance with regulations (e.g., GDPR) and defining security policies.  
-3. **SOC and SIEM Integration**: Real-time monitoring, alerting, and incident response through a SOC-like setup using open-source tools.  
+3. **Real-Time Communication**:  
+   - Implement real-time messaging using **sockets**.
+   - Use SSL/TLS protocols to secure communication between clients and the server.
 
----
-
-## 🚀 **Why This Project?**  
-
-1. **Comprehensive Scope**: Covers cloud, governance, and SOC/incident response expertise.  
-2. **Practical**: Solves real-world challenges as enterprises migrate to the cloud.  
-3. **Showcase Skills**: Demonstrates knowledge of tools like **Docker**, **AWS**, **SIEM**, governance, and incident response.  
-4. **Scalable**: Designed for future enhancement as your skills evolve.  
+4. **Scalability**:  
+   - Design the system to support future enhancements, including migration to a hybrid cloud environment.
 
 ---
 
-## 📂 **Project Components**  
+## **Key Features**
+1. **Secure User Registration**  
+   - Users must register using their name, email, username, and password.  
+   - A script (`client.py`) will be downloaded during registration to locally generate **private and public keys**.
 
-### 1. **Cloud Infrastructure Setup** (Cloud Specialist)  
-- **Objective**: Simulate a secure enterprise setup in the cloud using AWS Free Tier or equivalent.  
-- **Tasks**:  
-  - Configure **VPCs (Virtual Private Cloud)**, subnets, and secure network architectures.  
-  - Set up **virtual machines (EC2)** and **containers (Docker)**.  
-  - Use **S3 buckets** for storage with proper encryption and access policies.  
-  - Implement **Identity and Access Management (IAM)**.  
-  - Create a **bastion host or VPN** for secure administrative access.  
+2. **Multi-Factor Authentication (MFA)**  
+   - An extra layer of security will be added during login to verify user identities.
 
-### 2. **Security Governance & Compliance** (Governance Specialist)  
-- **Objective**: Define and document security policies and compliance standards for cloud resources.  
-- **Tasks**:  
-  - Research **GDPR compliance** and implement privacy measures.  
-  - Write policies for **user roles**, **data classification**, **encryption**, and **incident response**.  
-  - Use **AWS Config** or **Azure Security Center** to enforce and monitor these policies.  
+3. **Encrypted Messaging**  
+   - All messages are encrypted using public keys before being sent to the server.  
+   - Only the intended recipient can decrypt messages using their private key.
 
-### 3. **SOC Monitoring & Incident Response** (SOC Enthusiast)  
-- **Objective**: Establish a SOC-like environment for monitoring and incident response.  
-- **Tasks**:  
-  - Deploy an open-source **SIEM tool** (e.g., Wazuh, Graylog, or ELK Stack).  
-  - Configure log collection from **AWS CloudTrail**, virtual machines, and applications.  
-  - Set up **alerts** for suspicious activities (e.g., failed login attempts, privilege escalations).  
-  - Simulate real-world incidents (e.g., unauthorized access) and document response workflows.  
-  - Create a **dashboard** to visualize logs, trends, and security metrics.  
+4. **SSL/TLS Secured Connections**  
+   - All communication between clients and the server will be secured with SSL/TLS certificates.
 
-### 4. **DevSecOps Integration** (Optional Add-On)  
-- Implement a **CI/CD pipeline** with security checks, such as **Trivy** for Docker image scanning.  
+5. **Cross-Platform Accessibility**  
+   - Users can access the platform through a web browser via a secure HTTPS URL or domain name.
 
 ---
 
-## 🔧 **Project Tools & Resources**  
-
-1. **Cloud Providers (Free Tier)**:  
-   - AWS Free Tier, Azure Free Tier, or Google Cloud Platform.  
-
-2. **SIEM & Monitoring Tools**:  
-   - Wazuh, Graylog, or ELK Stack for log analysis and visualization.  
-
-3. **Automation Tools**:  
-   - Terraform or CloudFormation for infrastructure deployment.  
-   - Ansible (optional) for configuration management.  
-
-4. **Containers**:  
-   - Docker for hosting applications and simulating microservices.  
-
-5. **Governance Tools**:  
-   - AWS Config or Azure Policy to enforce compliance.  
+## **Technical Stack**
+- **Frontend**: HTML, CSS, JavaScript  
+- **Backend**: Python (with Flask or Django)  
+- **Encryption Library**: `PyCryptodome` or equivalent  
+- **Database**: SQLite or MySQL for user management  
+- **Sockets**: Python `socket` library for real-time communication  
+- **Security Protocols**: SSL/TLS certificates for transport layer security  
 
 ---
 
-## 📋 **Deliverables**  
+## **Project Structure**
+1. **Authentication Module**  
+   - Secure user registration and login with MFA.  
+   - Local generation of private/public keys using the downloaded `client.py` script.
 
-1. **Cloud Infrastructure Design Document**:  
-   - Architecture diagrams, policies, and configurations.  
+2. **Chatroom Module**  
+   - Real-time communication using sockets.  
+   - End-to-end encryption for all messages.  
 
-2. **Security Governance Framework**:  
-   - Policies for IAM, data protection, and compliance.  
+3. **Server-Side Security**  
+   - SSL/TLS to secure communication.  
+   - No storage of private keys on the server.
 
-3. **SOC Dashboard & Incident Response Plan**:  
-   - A functional SIEM dashboard with logs, alerts, and simulated incident reports.  
-
-4. **GitHub Repository**:  
-   - Includes all code, configurations, and documentation, with a README explaining the project.  
-
-5. **Presentation/Demo**:  
-   - A video or slide deck showcasing the platform’s functionality.  
-
----
-
-## 🗓️ **Project Timeline (3 Months)**  
-
-1. **Month 1**:  
-   - Set up the cloud environment and define the initial architecture.  
-   - Begin writing security policies and testing configurations.  
-
-2. **Month 2**:  
-   - Implement the SOC environment (SIEM, alerts, dashboards).  
-   - Simulate incidents and fine-tune monitoring tools.  
-
-3. **Month 3**:  
-   - Finalize governance documentation.  
-   - Test and validate the overall setup.  
-   - Prepare the GitHub repository, README, and demo.  
+4. **Future Extension**  
+   - Migration to a hybrid cloud environment to support scalability and enhanced reliability.  
 
 ---
 
-## 🎯 **Why It Will Stand Out**  
+## **Project Milestones**
+1. **Phase 1: Planning and Design**  
+   - Define user stories and project requirements.  
+   - Create diagrams for system architecture and data flow.
 
-1. **Practical Impact**: Solves real-world challenges faced by enterprises.  
-2. **Team Collaboration**: Divides tasks according to expertise areas.  
-3. **Portfolio-Ready**: Highlights cloud, security, governance, and SOC skills.  
-4. **Future-Proof**: Addresses trending areas like cloud migration and monitoring.  
+2. **Phase 2: Development**  
+   - Develop user registration and login modules with MFA.  
+   - Implement key generation and management.  
+   - Build the chatroom with socket-based real-time communication.
 
----
+3. **Phase 3: Testing and Security Validation**  
+   - Test encryption and decryption processes.  
+   - Conduct security audits to ensure data protection.
 
-
-
-# 📝 **Simulated Enterprise Environment (Before Migration)**  
-
-### **Overview**  
-
-To simulate the infrastructure of an existing company, we designed a fictional enterprise environment called **SecureCo**. This environment replicates the systems, data, and workflows of a small-to-medium-sized business and serves as the baseline for our cloud migration project.  
-
-### **Company Details**  
-
-- **Name**: SecureCo  
-- **Industry**: Financial Services or E-Commerce  
-- **Infrastructure Challenges**:  
-  - Hosting systems and applications on local servers.  
-  - Limited security measures to protect sensitive data.  
-  - Inefficient or outdated file-sharing systems.  
+4. **Phase 4: Documentation and Deployment**  
+   - Prepare documentation for GitHub and user guides.  
+   - Deploy the system on a local or test environment.
 
 ---
 
-### **Simulated Infrastructure Components**  
+## **How It Works**
+1. **User Registration**:  
+   - The user fills in a registration form with basic details.  
+   - A file (`client.py`) is downloaded to their device, generating private and public keys locally.  
+   - The public key is sent to the server, while the private key remains on the user's device.
 
-1. **Servers**  
-   - Simulated Environment: Virtual Machines (VM) or Docker containers hosted locally.  
-   - Setup Details:  
-     - A **web server** (Nginx or Apache) to host a basic application.  
-     - A **database server** (MySQL or PostgreSQL) to store company data.  
+2. **User Login**:  
+   - Users log in with MFA for added security.  
+   - Upon successful login, they gain access to the chatroom.
 
-2. **Applications**  
-   - Internal Web Application:  
-     - A simple internal application for managing employees, customers, or products.  
-     - Built with HTML, CSS, and a backend framework like Flask or Django.  
-
-3. **File Sharing System**  
-   - **NAS Simulation**:  
-     - A shared file system for employees, implemented using **Nextcloud**.  
-     - Hosted locally via a Docker container or VM to mimic enterprise-level file sharing.  
-
-4. **Data**  
-   - Fictitious datasets for testing, including:  
-     - Employee records.  
-     - Customer data.  
-     - Transactional or financial data.  
+3. **Messaging**:  
+   - Users send messages that are encrypted using the recipient's public key.  
+   - The server stores the encrypted messages temporarily until they are delivered.  
+   - Only the recipient can decrypt the messages using their private key.
 
 ---
 
-### **Cloud Migration Plan**  
-
-The migration plan consists of transferring the on-premise environment to a secure cloud infrastructure and implementing best practices for security governance.  
-
-#### **Migration Steps**  
-
-1. **Cloud Infrastructure Setup**  
-   - Set up a secure cloud environment using AWS Free Tier, Azure Free Tier, or Google Cloud Platform.  
-   - Key components:  
-     - **VPC**: Define secure subnets and networking.  
-     - **Compute Instances (EC2)**: Deploy the application and database.  
-     - **Storage (S3)**: Use secure storage for files and data.  
-     - **IAM Policies**: Create fine-grained access controls for all resources.  
-
-2. **Application Migration**  
-   - Migrate the local application to a cloud-hosted instance (e.g., AWS Elastic Beanstalk or EC2).  
-   - Integrate the application with a cloud-hosted database (AWS RDS).  
-
-3. **File System Migration**  
-   - Replace the NAS with cloud-based storage like AWS S3 or Azure Blob Storage.  
-   - Implement encryption for data at rest and in transit.  
-
-4. **Security Governance**  
-   - Define security policies for access control, encryption, and compliance with standards like GDPR.  
-   - Use cloud governance tools (e.g., AWS Config, Azure Policy) to enforce these rules.  
-
-5. **Monitoring and Incident Response**  
-   - Deploy a SIEM solution (e.g., Wazuh, ELK Stack) for log collection and monitoring.  
-   - Simulate incidents (e.g., unauthorized access) and create an incident response plan.  
+## **Next Steps**
+1. Review the project structure and finalize design decisions.  
+2. Divide tasks among team members based on expertise and interest:  
+   - **User Authentication and Key Management**: [Team Member Name]  
+   - **Chatroom Backend (Sockets)**: [Team Member Name]  
+   - **Frontend Design and Integration**: [Team Member Name]  
+   - **Security Audits**: [Team Member Name]  
+3. Begin development and share progress regularly.
 
 ---
 
-## **Deliverables**  
-
-1. **Simulated Environment Documentation**: Description of the infrastructure setup before migration and architecture diagrams.  
-2. **Migration Documentation**: Step-by-step guide for migrating the infrastructure to the cloud and diagrams showing the architecture after migration.  
-3. **Security Policies**: Detailed security governance framework, including IAM policies, encryption rules, and compliance measures.  
-4. **SIEM and Monitoring Setup**: Logs, dashboards, and incident reports created during the monitoring phase.  
-5. **GitHub Repository**: Source code, configurations (e.g., Terraform files), and documentation for reproducing the project.  
+This `README.md` will help your teammates understand the project scope and guide the initial development phases. Si tu as besoin d’ajuster certains points ou d’ajouter des détails, fais-le-moi savoir !
