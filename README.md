@@ -183,5 +183,91 @@ Let's make this project a success! 💪✨
 
 
 ---
+## **Task Distribution**
 
-This `README.md` will help your teammates understand the project scope and guide the initial development phases. Si tu as besoin d’ajuster certains points ou d’ajouter des détails, fais-le-moi savoir !
+### **1. Multi-Factor Authentication (MFA) and User Frontend** 🔑  
+- **Responsible Member**: [Your Name]  
+- **Tasks**:  
+  - Integrate an existing MFA module into the project using React and Vite.  
+  - Develop the frontend for user registration and login, including forms and validation.  
+  - Ensure the downloaded `client.py` script is integrated into the frontend to generate private/public keys locally.  
+  - Test and debug the user interface for a seamless experience.
+
+---
+
+### **2. Backend Development and Enhancements** 🖥️  
+- **Responsible Member**: [Backend Specialist’s Name]  
+- **Tasks**:  
+  - Complete the backend infrastructure using sockets for real-time messaging.  
+  - Integrate the following key features:  
+    - Support for encrypted messaging using public/private keys.  
+    - A mechanism for users to upload and validate their public keys during registration.  
+    - Server logic to handle encrypted messages without accessing private keys.  
+  - Develop APIs for the frontend to interact with the backend, including endpoints for:  
+    - User registration.  
+    - Message encryption and delivery.  
+    - Key exchange validation.  
+  - Prepare detailed documentation for backend logic and APIs.
+
+---
+
+### **3. Database Design and Implementation** 📂  
+- **Responsible Member**: [Database Specialist’s Name]  
+- **Tasks**:  
+  - Design the database schema for the following:  
+    - User profiles (name, email, username, public key, etc.).  
+    - Message storage (encrypted messages, timestamps, sender/recipient IDs).  
+  - Implement the database using MySQL or SQLite.  
+  - Test data storage and retrieval for performance and reliability.  
+  - Collaborate with the backend developer to integrate database queries.  
+
+---
+
+### **Collaboration Workflow** 🤝  
+1. **Branch Management**:  
+   - Each member works on their assigned tasks in a dedicated branch (`mfa-frontend`, `backend`, `database`).  
+   - Push changes regularly to GitHub.  
+
+2. **Review Process**:  
+   - Every 3 days, the team meets to merge branches, review progress, and solve issues.  
+
+3. **Final Integration**:  
+   - Combine frontend, backend, and database components for a functional prototype.  
+
+4. **Testing and Debugging**:  
+   - All members participate in testing to ensure the system functions as intended.  
+
+---
+
+### **Additional Instructions for Backend Developer**
+#### **Objective**: Enhance the backend to handle encrypted communication, user key uploads, and secure real-time messaging.  
+
+#### **Tasks**:  
+1. **Socket-Based Messaging**:  
+   - Finalize the implementation of socket communication for real-time chats.  
+   - Ensure messages are encrypted before being sent to the server.  
+
+2. **Key Management**:  
+   - Implement logic for validating and storing user public keys upon registration.  
+   - Reject invalid or compromised keys to maintain security.  
+
+3. **Message Handling**:  
+   - Add support for the server to store encrypted messages temporarily until delivery.  
+   - Ensure the server has no access to plaintext messages or private keys.  
+
+4. **API Development**:  
+   - Create endpoints for:  
+     - User registration and login with key validation.  
+     - Uploading public keys during registration.  
+     - Sending and retrieving encrypted messages.  
+
+5. **Security Features**:  
+   - Secure socket communication with SSL/TLS.  
+   - Log and handle unauthorized access attempts.  
+
+6. **Documentation**:  
+   - Write clear instructions for other team members to understand the backend structure and API usage.  
+
+---
+
+Avec cette structure, chaque membre a des tâches spécifiques et peut avancer indépendamment. Dis-moi si tu veux ajuster certaines parties ou si tu veux un format différent. Je peux aussi transformer la section du backend en une **page Notion** si besoin.
