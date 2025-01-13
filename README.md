@@ -152,33 +152,41 @@ This project aims to develop a **secure chatroom platform** that ensures **priva
 ### **3. Database Design** 📂  
 - **Responsible**: [Database Specialist]  
 - **Tasks**:  
-   - Design schema for user profiles and message storage.  
-   - Implement the database using SQLite or MySQL.  
-   - Test performance and integrate with the backend.  
+  - Design a simple and intuitive user interface for the chatroom.  
+  - Create forms for registration and login with validation.  
+  - Integrate frontend with the backend (API endpoints, real-time messaging).  
+  - Test the interface on different devices and browsers.  
+  - Add visual elements to enhance user experience (icons, buttons, etc.).  
+
+### **4. Security Audits and Testing** 🛡️  
+- **Shared Responsibility**: [Team Member 1, Team Member 2, Team Member 3]  
+- **Tasks**:  
+  - Perform unit testing on key features (authentication, messaging, encryption).  
+  - Simulate attacks to test the security of private keys and encrypted messages.  
+  - Validate SSL/TLS implementation to prevent vulnerabilities.  
+  - Review and improve overall project security.  
+
+### **5. Documentation and Project Management** 📋  
+- **Shared Responsibility**: [Team Member 1, Team Member 2, Team Member 3]  
+- **Tasks**:  
+  - Document each feature and functionality for GitHub.  
+  - Prepare clear setup and usage instructions.  
+  - Monitor task completion and update milestones.  
+  - Share progress updates with the group regularly.  
 
 ---
 
-## 🤝 **Collaboration Workflow**  
+### **Next Steps** 🚀  
+1. Begin by setting up the development environment and initializing the repository.  
+2. Follow the task distribution above and start with high-priority features:  
+   - Authentication system.  
+   - Socket-based messaging backend.  
+3. Regularly share updates during team meetings or through your group chat.  
+4. Test and review completed tasks to ensure quality before moving to the next phase.  
 
-1. **Branch Management**: Each member works in their own branch (e.g., `frontend`, `backend`).  
-2. **Code Reviews**: Regular team reviews to ensure progress and quality.  
-3. **Integration**: Combine components for a functional prototype.  
-4. **Testing**: Test the entire system to ensure proper functionality and security.  
+Let's make this project a success! 💪✨  
 
----
-
-## 📝 **Backend Developer Notes**  
-
-### **Objectives**  
-- Handle encrypted communication securely.  
-- Manage user keys and real-time messaging.  
-
-### **Tasks**  
-1. Implement socket-based messaging for real-time communication.  
-2. Validate and store public keys during registration.  
-3. Ensure the server stores only encrypted messages, with no access to private keys.  
-4. Develop secure APIs for authentication, key exchange, and messaging.  
-5. Secure all communications with SSL/TLS.  
-6. Document backend logic and APIs for team reference.  
 
 ---
+
+This `README.md` will help your teammates understand the project scope and guide the initial development phases. Si tu as besoin d’ajuster certains points ou d’ajouter des détails, fais-le-moi savoir !
