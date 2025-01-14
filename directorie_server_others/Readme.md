@@ -21,6 +21,8 @@ This document outlines the interactions and workflows between the components of 
 
 3. **Client-Side Key Generation**  
    - After completing the MFA setup, the frontend triggers a script (`client.py`) to generate **private and public keys** locally.  
+   - The backend provides the user with a downloadable file or script that facilitates the generation of the keys.  
+   - The user downloads the file, executes it on their local machine to generate the keys, and uploads the public key back to the system via the frontend.  
    - The public key is sent to the backend via `POST /register/key` and stored in the main database.  
 
 ---
