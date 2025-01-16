@@ -87,7 +87,6 @@ curl -X POST http://mfa-server_IP_Addr:7002/api/auth/register \
 ```json
 {
     "message": "User registered successfully",
-    "userId": "550e8400-e29b-41d4-a716-446655440000"
 }
 ```  
 
