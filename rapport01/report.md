@@ -22,17 +22,31 @@ Stores essential user authentication and management information.
 
 | Field              | Type         | Constraints                                                  |
 |--------------------|--------------|-------------------------------------------------------------|
-| `id`               | CHAR(36)     | PRIMARY KEY, UUID                                           |
+| `_id`               | CHAR(36)     | PRIMARY KEY, UUID                                           |
 | `username`         | VARCHAR(255) | UNIQUE, NOT NULL                                            |
 | `password`         | TEXT         | NOT NULL                                                   |
-| `is_mfa_active`    | BOOLEAN      | DEFAULT FALSE                                               |
-| `two_factor_secret`| TEXT         | NULLABLE                                                    |
-| `public_key`       | TEXT         | NULLABLE                                                    |
-| `private_key`      | TEXT         | NULLABLE                                                    |
-| `session_token`    | TEXT         | NULLABLE                                                    |
-| `created_at`       | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                   |
-| `updated_at`       | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP       |  
+| `isMfaActive`    | BOOLEAN      | DEFAULT FALSE                                               |
+| `twoFactorSecret`| TEXT         | NULLABLE                                                    |
+| `publicKey`       | TEXT         | NULLABLE                                                    |
+| `privateKey`      | TEXT         | NULLABLE                                                    |
+| `sessionToken`    | TEXT         | NULLABLE                                                    |
+| `createdAt`       | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                   |
+| `updatedAt`       | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP       |  
 
+| **Attribut**         | **Rôle / Description**                                                                                  |
+|-----------------------|--------------------------------------------------------------------------------------------------------|
+| `_id`                | Identifiant unique (UUID). Utilisé pour identifier chaque utilisateur de manière sécurisée.            |
+| `username`           | Nom d'utilisateur choisi par l'utilisateur. Doit être unique.                                         |
+| `password`           | Mot de passe de l'utilisateur, stocké sous forme hachée pour des raisons de sécurité.                 |
+| `isMfaActive`        | Indique si l'utilisateur a activé l'authentification multi-facteurs (MFA).                            |
+| `twoFactorSecret`    | Clé secrète utilisée pour générer les OTP (One-Time Passwords) dans le cadre du MFA.                  |
+| `publicKey`          | Clé publique pour le chiffrement des messages.                                                        |
+| `privateKey`         | Clé privée, utilisée pour déchiffrer les messages. Elle est chiffrée et stockée pour plus de sécurité. |
+| `sessionToken`       | Jeton de session généré après la connexion. Utilisé pour maintenir la session utilisateur.            |
+| `createdAt`          | Horodatage de la création de l'utilisateur dans la base de données.                                   |
+| `updatedAt`          | Horodatage de la dernière mise à jour des informations de l'utilisateur.                              |
+
+---
 ---
 
 #### **Table: `messages`**  
@@ -41,11 +55,20 @@ Manages exchanged messages between users.
 | Field              | Type         | Constraints                                                  |
 |--------------------|--------------|-------------------------------------------------------------|
 | `id`               | CHAR(36)     | PRIMARY KEY, UUID                                           |
-| `sender_id`        | CHAR(36)     | FOREIGN KEY (`users.id`)                                    |
-| `receiver_id`      | CHAR(36)     | FOREIGN KEY (`users.id`)                                    |
-| `encrypted_message`| TEXT         | NOT NULL                                                   |
+| `senderId`        | CHAR(36)     | FOREIGN KEY (`users.id`)                                    |
+| `receiverId`      | CHAR(36)     | FOREIGN KEY (`users.id`)                                    |
+| `encryptedMessage`| TEXT         | NOT NULL                                                   |
 | `signature`        | TEXT         | NULLABLE                                                    |
 | `timestamp`        | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                   |  
+
+| **Attribut**         | **Rôle / Description**                                                                                  |
+|-----------------------|--------------------------------------------------------------------------------------------------------|
+| `id`                 | Identifiant unique (UUID) pour chaque message.                                                        |
+| `senderId`           | Référence à `users._id`. Identifie l'utilisateur qui a envoyé le message.                             |
+| `receiverId`         | Référence à `users._id`. Identifie l'utilisateur qui doit recevoir le message.                        |
+| `encryptedMessage`   | Contenu chiffré du message. Le chiffrement garantit que seul le destinataire peut lire le message.     |
+| `signature`          | Signature numérique pour vérifier l'intégrité du message.                                            |
+| `timestamp`          | Horodatage indiquant quand le message a été envoyé.                                                  |
 
 ---
 
@@ -55,10 +78,18 @@ Tracks events related to MFA authentication.
 | Field              | Type         | Constraints                                                  |
 |--------------------|--------------|-------------------------------------------------------------|
 | `id`               | CHAR(36)     | PRIMARY KEY, UUID                                           |
-| `user_id`          | CHAR(36)     | FOREIGN KEY (`users.id`)                                    |
+| `userId`          | CHAR(36)     | FOREIGN KEY (`users.id`)                                    |
 | `event`            | VARCHAR(255) | NOT NULL                                                   |
-| `ip_address`       | VARCHAR(255) | NULLABLE                                                    |
+| `ipAddress`       | VARCHAR(255) | NULLABLE                                                    |
 | `timestamp`        | TIMESTAMP    | DEFAULT CURRENT_TIMESTAMP                                   |  
+
+| **Attribut**         | **Rôle / Description**                                                                                  |
+|-----------------------|--------------------------------------------------------------------------------------------------------|
+| `id`                 | Identifiant unique (UUID) pour chaque événement MFA.                                                  |
+| `userId`             | Référence à `users._id`. Identifie l'utilisateur associé à l'événement.                               |
+| `event`              | Type d'événement (par exemple : `MFA_SUCCESS`, `MFA_FAILURE`, etc.).                                   |
+| `ipAddress`          | Adresse IP de l'utilisateur qui a initié l'événement. Utile pour détecter des tentatives suspectes.   |
+| `timestamp`          | Horodatage indiquant quand l'événement s'est produit.                                                |
 
 ---
 
@@ -208,7 +239,7 @@ curl -X POST http://mfa-server_IP_Addr:7002/api/auth/2fa/reset \
 **Failure Response**:  
 ```json
 {
-    error: "Error resetting 2FA", message: error.message
+    "error": "Error resetting 2FA"
 }
 ```  
 
@@ -237,5 +268,6 @@ curl -X POST http://mfa-server_IP_Addr:7002/api/auth/2fa/reset \
 1. Validate the MFA server routes for registration and login.  
 2. Create and test tables in MariaDB.  
 3. Integrate communication between the main backend and the MFA server.  
-4. Finalize backend and frontend tasks before full system integration.  
+4. Finalize backend and frontend tasks before full system integration.
+
 
