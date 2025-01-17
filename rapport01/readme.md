@@ -202,7 +202,8 @@ curl -X POST http://mfa-server_IP_Addr:7002/api/auth/2fa/verify \
 -H "Content-Type: application/json" \
 --cookie "connect.sid=<session_id>" \
 -d '{
-  "token": "054704"
+    "username": "newuser",
+    "token": "542736"
 }'
 ```  
 
@@ -210,7 +211,7 @@ curl -X POST http://mfa-server_IP_Addr:7002/api/auth/2fa/verify \
 ```json
 {
   "message": "2FA verified successfully",
-  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIiLCJpYXQiOjE3MzcwMjU4MjQsImV4cCI6MTczNzAyOTQyNH0.VPCGD731eGbQ1gV-16v1BX9487vCYgNSJigjKfcUyjw"
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im5ld3VzZXIiLCJfaWQiOiIwYThlMTVlMS0xMTRkLTRkZmMtYTgwNC01ZWI0ZDI0NjZmYTQiLCJpYXQiOjE3MzcxMzExMjUsImV4cCI6MTczNzEzNDcyNX0.c6XB7O0EzCg8GjhQnXRWkCNjk_4M7fcYDLnWVln1ba0"
 }
 ```  
 
