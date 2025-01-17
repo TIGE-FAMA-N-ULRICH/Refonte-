@@ -21,22 +21,37 @@ The connection between the Node.js server and MariaDB was set up in the `dbConne
 
 ```javascript
 import mysql from "mysql2/promise";
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const DB_HOST = "MFA_server_IP_Add"; 
+const DB_PORT = 3306;        
+const DB_USER = "mfa_server";      
+const DB_PASS = "passwword"; 
+const DB_NAME = "database";   
 
 export const dbConnect = async () => {
     try {
         const connection = await mysql.createConnection({
-            host: "192.168.150.143",   // MariaDB server IP
-            user: "mfa_server",        // MariaDB username
-            password: "mfaP@ssw97ord", // MariaDB password
-            database: "project_db",    // Database name
+            host: DB_HOST,
+            port: DB_PORT,
+            user: DB_USER,
+            password: DB_PASS,
+            database: DB_NAME
         });
-        console.log("MariaDB connection SUCCESS");
+        console.log(`MariaDB conection SUCCESS: ${connection.config.host}`)
         return connection;
     } catch (error) {
-        console.error(`MariaDB connection FAIL: ${error.message}`);
+        console.log(`Database connection failed: ${error}`);
+        console.error(`MariaDB connection FAIL`);
         process.exit(1);
     }
-};
+}
+
+export default dbConnect;
+
+
 ```  
 
 #### **Changes from MongoDB Configuration**  
@@ -51,24 +66,23 @@ All MongoDB-based functions (`findOne`, `save`, etc.) were rewritten as SQL quer
 
 - **Finding a User by Username**:  
    ```javascript
-   export const findUserByUsername = async (username) => {
-       const connection = await dbConnect();
-       const [rows] = await connection.execute("SELECT * FROM users WHERE username = ?", [username]);
-       await connection.end();
-       return rows[0]; // Return the first matching user
-   };
+   export const findUserByUsername = async (username) =>{
+        const connection = await dbConnect();
+        const query = `SELECT * FROM users WHERE username = ?`;
+        const [rows] = await connection.execute(query, [username]);
+        await connection.end();
+        return rows[0]; 
+    };
+
    ```  
 
 - **Updating User Information**:  
    ```javascript
-   export const updateUser = async (username, data) => {
-       const connection = await dbConnect();
-       await connection.execute(
-           "UPDATE users SET twoFactorSecret = ?, isMfaActive = ? WHERE username = ?",
-           [data.twoFactorSecret, data.isMfaActive, username]
-       );
-       await connection.end();
-   };
+    export const updateUser = async (username, data) =>{
+        const connection = await dbConnect();
+        const query = `UPDATE users SET twoFactorSecret = ?, isMfaActive = ? WHERE username = ?`;
+        await connection.execute(query, [data.twoFactorSecret, data.isMfaActive, username]);
+    };
    ```  
 
 These adjustments replaced all MongoDB logic with equivalent SQL queries for MariaDB.  
@@ -91,10 +105,11 @@ The `_id` field in the `users` table was defined as `NOT NULL`, but no UUID was 
 Manually generated a UUID in the application using the `uuid` library:  
 
 ```javascript
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from 'uuid';
 
-const _id = uuidv4(); // Generate a UUID
-await connection.execute("INSERT INTO users (_id, username, password) VALUES (?, ?, ?)", [_id, username, hashedPassword]);
+const query = `INSERT INTO users (_id, username, password, isMfaActive) VALUES (?, ?, ?, ?)`;
+const _id = uuidv4();
+await connection.execute(query, [_id, username, hashedPassword, false]);
 ```  
 
 ---
@@ -113,49 +128,14 @@ A typo in the code caused an `undefined` value to be passed for the `twoFactorSe
 Corrected the typo in the `updateUser` function. Updated implementation:  
 
 ```javascript
-await connection.execute(
-    "UPDATE users SET twoFactorSecret = ?, isMfaActive = ? WHERE username = ?",
-    [data.twoFactorSecret, data.isMfaActive, username]
-);
+
+const query = `UPDATE users SET twoFactorSecret = ?, isMfaActive = ? WHERE username = ?`;
+await connection.execute(query, [data.twoFactorSecret, data.isMfaActive, username]);
 ```  
 
 ---
 
-### **3.3. Undefined `req.user` in `/api/2fa/verify`**  
-
-#### **Error**:  
-When calling the `/api/2fa/verify` endpoint, the `req.user` property was empty, resulting in errors.  
-
-#### **Cause**:  
-The middleware for decoding JWTs was not applied to this endpoint.  
-
-#### **Solution**:  
-Added a global JWT middleware to validate tokens and populate `req.user`.  
-
-```javascript
-export const authenticate = (req, res, next) => {
-    const token = req.headers.authorization?.split(" ")[1];
-    if (!token) return res.status(401).json({ message: "Unauthorized" });
-
-    try {
-        const decoded = jwt.verify(token, "my-jwt-secret");
-        req.user = decoded;
-        next();
-    } catch (error) {
-        res.status(401).json({ message: "Invalid token" });
-    }
-};
-```  
-
-Applied the middleware to the `/api/2fa/verify` route:  
-
-```javascript
-router.post("/api/2fa/verify", authenticate, verify2FA);
-```  
-
----
-
-### **3.4. `ERR_HTTP_HEADERS_SENT` Error During Logout**  
+### **3.3. `ERR_HTTP_HEADERS_SENT` Error During Logout**  
 
 #### **Error**:  
 ```text
@@ -180,24 +160,69 @@ Implemented in the `logout` controller:
 ```javascript
 export const logout = async (req, res) => {
     try {
-        if (!req.user) return res.status(401).json({ message: "Unauthorized user" });
+        // Vérifie si l'utilisateur est authentifié
+        if (!req.user) {
+            console.warn("Unauthorized user trying to log out");
+            return res.status(401).json({ message: "Unauthorized user" });
+        }
 
+        // Vérifie si les en-têtes ont déjà été envoyés
+        if (res.headersSent) {
+            console.warn("Headers already sent before logout");
+            return;
+        }
+
+        // Déconnexion de l'utilisateur
         req.logout((err) => {
-            if (err) return res.status(500).json({ message: "Error logging out", error: err.message });
+            if (err) {
+                if (res.headersSent) {
+                    console.warn("Headers already sent during req.logout");
+                    return;
+                }
 
+                console.error("Error during logout:", err.message);
+                return res.status(500).json({ message: "Error logging out", error: err.message });
+            }
+
+            // Détruire la session
             req.session.destroy((err) => {
-                if (err) return res.status(500).json({ message: "Error destroying session", error: err.message });
+                if (err) {
+                    if (res.headersSent) {
+                        console.warn("Headers already sent during session destruction");
+                        return;
+                    }
+
+                    console.error("Error during session destruction:", err.message);
+                    return res.status(500).json({ message: "Error destroying session", error: err.message });
+                }
+
+                // Effacer les cookies
+                if (res.headersSent) {
+                    console.warn("Headers already sent before clearing cookies");
+                    return;
+                }
 
                 res.clearCookie("connect.sid");
-                res.status(200).json({ message: "User logged out successfully" });
+
+                // Vérifie avant d'envoyer la réponse finale
+                if (res.headersSent) {
+                    console.warn("Headers already sent before final response");
+                    return;
+                }
+
+                // Envoie la réponse finale
+                console.log("Sending response: User logged out");
+                return res.status(200).json({ message: "User logged out successfully" });
             });
         });
     } catch (error) {
         if (res.headersSent) {
-            console.warn("Headers already sent for this request.");
+            console.warn("Headers already sent during unexpected error handling");
             return;
         }
-        res.status(500).json({ message: "Unexpected error during logout", error: error.message });
+
+        console.error("Unexpected error during logout:", error.message);
+        return res.status(500).json({ message: "Unexpected error during logout", error: error.message });
     }
 };
 ```  
